@@ -1,0 +1,60 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="tituloApp">TeLlevoAPP</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Registro</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container">
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title style="color: #FF8C00;">Agregar Usuario</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-list style="border-radius: 12px;">
+          <form [formGroup]="usuario">
+            <ion-item>
+              <ion-input label="Nombre de Usuario" labelPlacement="floating" placeholder="Ingrese su nombre de usuario" formControlName="username" [(ngModel)]="user.username"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input label="Nombre" labelPlacement="floating" placeholder="Ingrese su nombre" formControlName="nombre" [(ngModel)]="user.nombre"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input label="Apellido" labelPlacement="floating" placeholder="Ingrese su apellido" formControlName="apellido" [(ngModel)]="user.apellido"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input label="Correo" labelPlacement="floating" placeholder="Ingrese su correo electrónico" formControlName="correo" [(ngModel)]="user.correo"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input label="Contraseña" labelPlacement="floating" formControlName="clave"
+                placeholder="Ingrese su contraseña" [(ngModel)]="user.password"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Tipo de Usuario</ion-label>
+              <ion-select formControlName="tipoUsuario" [(ngModel)]="user.tipo_usuario" placeholder="Seleccione un tipo de usuario">
+                <ion-select-option *ngFor="let typeUser of typeUsers" [value]="typeUser.idTipoUsuario">
+                  {{ typeUser.nombreTipoUsuario }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </form>
+          <div id="cont-botones">
+            <ion-button style="margin-right: 20px;" (click)="limpiar()">Limpiar</ion-button>
+            <ion-button (click)="agregar()">Agregar</ion-button>
+          </div>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

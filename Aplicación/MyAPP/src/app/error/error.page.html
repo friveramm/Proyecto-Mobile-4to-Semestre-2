@@ -1,0 +1,27 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="tituloApp">TeLlevoAPP</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">error</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container" >
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title style="color: #FF8C00;">ERROR 404</ion-card-title>
+        <ion-card-subtitle>Ha ocurrido un error en el sistema</ion-card-subtitle>
+        <br>
+        <p>Si desea volver a la página de LOGIN, <br> presione <a [routerLink]="['/home']">aquí</a>.</p>
+      </ion-card-header>
+
+    </ion-card>
+  </div>
+
+</ion-content>

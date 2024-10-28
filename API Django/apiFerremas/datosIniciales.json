@@ -1,0 +1,54 @@
+[
+    {
+        "model": "rest_usuario.tipousuario",
+        "pk": 1,
+        "fields": {
+            "idTipoUsuario": 1,
+            "nombreTipoUsuario": "Administrador"
+        }
+    },
+    {
+        "model": "rest_usuario.tipousuario",
+        "pk": 2,
+        "fields": {
+            "idTipoUsuario": 2,
+            "nombreTipoUsuario": "Usuario"
+        }
+    },
+    {
+        "model": "rest_usuario.usuario",
+        "pk": 1,
+        "fields": {
+            "username": "admin1",
+            "nombre": "Juan",
+            "apellido": "Pérez",
+            "correo": "juan.perez@example.com",
+            "password": "pass123", 
+            "tipo_usuario": 1
+        }
+    },
+    {
+        "model": "rest_usuario.usuario",
+        "pk": 2,
+        "fields": {
+            "username": "user1",
+            "nombre": "María",
+            "apellido": "Gómez",
+            "correo": "maria.gomez@example.com",
+            "password": "pass123", 
+            "tipo_usuario": 2
+        }
+    },
+    {
+        "model": "rest_usuario.usuario",
+        "pk": 3,
+        "fields": {
+            "username": "user2",
+            "nombre": "José",
+            "apellido": "Kuvo",
+            "correo": "jose.kuvo@example.com",
+            "password": "pass123", 
+            "tipo_usuario": 2
+        }
+    }
+]

@@ -1,0 +1,52 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="tituloApp">
+      TeLlevoAPP
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">TeLlevoAPP</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container">
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title style="color: #FF8C00;">LOGIN</ion-card-title>
+        <ion-card-subtitle>¡Bienvenid&#64;!</ion-card-subtitle>
+      </ion-card-header>
+    
+      <ion-card-content>
+        <div class="imagenPerfil">
+          <img src="../../assets/img/user-icon.png" alt="">
+        </div>
+        <ion-list style="border-radius: 12px;">
+          <ion-item>
+            <ion-input label="Usuario" [(ngModel)]="user.username" labelPlacement="floating" placeholder="Ingrese su usuario"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input label="Contraseña" [(ngModel)]="user.password" labelPlacement="floating" placeholder="Ingrese su contraseña" type="password"></ion-input>
+          </ion-item>
+            <div style="display: flex; justify-content: center; margin-top: 10px; margin-bottom: 10px;">
+              <p style="text-align: center;justify-content: center;font-size: small; color: red;">{{mensaje}}</p>
+            </div>
+          <div style="display: flex; justify-content: center; margin-top: 10px; margin-bottom: 10px;">
+            <ion-button (click)="validarBDD()">Ingresar</ion-button>
+          </div>
+          <div id="cont-botones">
+            <a [routerLink]="['/rec-pass']" style="text-align: center; text-decoration: underline;justify-content: center;font-size: small;">¿Olvidó su contraseña?</a>
+          </div>
+          <div id="cont-botones">
+            <a [routerLink]="['/registro']" style="text-align: center; text-decoration: underline;justify-content: center;font-size: small;">Registrarse</a>
+          </div>
+        </ion-list>
+      </ion-card-content>
+
+    </ion-card>
+  </div>
+</ion-content>

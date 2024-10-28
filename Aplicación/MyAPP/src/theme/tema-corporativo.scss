@@ -1,0 +1,120 @@
+// ion-content {
+//     --background: url("../assets/img/background.webp") no-repeat center center/cover;
+// }
+
+// #container {
+//     text-align: center;
+//     position: absolute;
+//     left: 0;
+//     right: 0;
+//     top: 50%;
+//     transform: translateY(-50%);
+// }
+
+// #container ion-card ion-card-header h1 {
+//     font-size: 26px;
+//     font-weight: bolder;
+// }
+
+// #container ion-card ion-card-content ion-list ion-item {
+//     --border-width: 0;
+//     --border-color: white;
+
+//     ion-label {
+//         text-align: start;
+//     }
+//     ion-input{
+//         text-align: center;
+//     }
+// }
+
+// ion-content {
+//     --background: black;
+// }
+
+// ion-button {
+//     --background: #FF8C00;
+
+//     --color: black;
+// }
+
+// #container {
+//     text-align: center;
+//     position: absolute;
+//     left: 0;
+//     right: 0;
+//     top: 50%;
+//     transform: translateY(-50%);
+//     background: white;
+//     width: 50%;
+// }
+
+// #container {
+//     width: 80%;
+//     text-align: center;
+//     margin: 0 auto; /* Esto centra el contenedor horizontalmente */
+// }
+
+#container {
+    text-align: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 80%;
+    margin: 0 auto;
+}
+
+#container ion-card {
+    background-color: black;
+    border-radius: 12px;
+}
+
+#container ion-card ion-card-header{
+    padding-top: 30px;
+}
+
+#container ion-card ion-card-content{
+    background-color: white;
+    background-color: black;
+    padding-bottom: 30px;
+}
+
+ion-content {
+    --background: #FF8C00;
+}
+
+div #cont-botones {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+#container ion-input {
+    --color: #FF8C00; /* Cambiar el color del texto */
+  }
+
+// #container ion-card ion-card-content ion-item ion-select{
+//     background-color: #1F1F1F;
+//     color: #1F1F1F;
+// }
+
+#container ion-card ion-card-content ion-item ion-label{
+    color: #FF8C00;
+}
+
+#container ion-card ion-card-content ion-item ion-select ion-select-option{
+    color: #FF8C00;
+}
+
+.tituloApp{
+    color: #FF8C00;
+}
+
+ion-back-button {
+    --color: #FF8C00; /* Cambiar el color del ícono del botón */
+  }

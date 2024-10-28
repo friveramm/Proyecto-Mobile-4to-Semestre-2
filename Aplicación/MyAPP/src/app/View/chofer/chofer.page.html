@@ -1,0 +1,65 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="tituloApp">TeLlevoAPP</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Chofer</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container">
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title style="color: #FF8C00;">Programación del Viaje</ion-card-title>
+        <ion-card-subtitle>¡Gracias por compartir el auto y ayudar a reducir la huella de carbono 🌍🚗,
+          {{this.username}}!</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-list style="border-radius: 12px;">
+          <ion-item>
+            <form class="example-form" style="width: 100%;">
+              <mat-form-field class="example-full-width" style="width: 100%;">
+                <mat-label>Destino</mat-label>
+                <input type="text" placeholder="Elige una opción" aria-label="Destino" matInput [formControl]="myControl"
+                  [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let option of options" [value]="option">
+                    {{ option }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </form>
+          </ion-item>
+          <ion-item>
+            <ion-input label="Hora de Salida" labelPlacement="floating"
+              placeholder="Ingrese la hora de salida"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input label="Asientos disponibles" labelPlacement="floating"
+              placeholder="Ingrese el número de asientos por persona"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input label="Precio por persona" labelPlacement="floating"
+              placeholder="Ingrese el precio por persona"></ion-input>
+          </ion-item>
+
+          <div id="cont-botones">
+            <ion-button style="margin-right: 20px;" >Limpiar</ion-button>
+            <ion-button>Continuar</ion-button>
+          </div>
+        </ion-list>
+      </ion-card-content>
+
+    </ion-card>
+  </div>
+
+</ion-content>
