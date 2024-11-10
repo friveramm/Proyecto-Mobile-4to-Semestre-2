@@ -29,7 +29,7 @@ import { provideHttpClient } from '@angular/common/http';
     MatInputModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, provideAnimationsAsync(), provideHttpClient()],
   bootstrap: [AppComponent],
