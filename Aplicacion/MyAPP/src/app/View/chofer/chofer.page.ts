@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import * as mapboxgl from 'mapbox-gl';
 import { environment } from 'src/environments/environment.prod';
 
+// Import para geolocalización
+import { Geolocation } from '@capacitor/geolocation';
+
 @Component({
   selector: 'app-chofer',
   templateUrl: './chofer.page.html',
@@ -44,15 +47,22 @@ export class ChoferPage implements OnInit {
     
   }
 
-  crearMapa(){
-    this.map = new mapboxgl.Map({
-      container: 'mapa-box',
-      style: this.style,
-      zoom: 14,
-      center:[
-        -70.615417,
-        -33.4331498,
-      ]
-    })
+  async crearMapa() {
+    try {
+      // Obtiene la posición actual
+      const position = await Geolocation.getCurrentPosition();
+      const latitud = position.coords.latitude;
+      const longitud = position.coords.longitude;
+  
+      // Centra el mapa en la posición actual
+      this.map = new mapboxgl.Map({
+        container: 'mapa-box',
+        style: this.style,
+        zoom: 14,
+        center: [longitud, latitud]
+      });
+    } catch (error) {
+      console.error('Error getting location:', error);
+    }
   }
 }
