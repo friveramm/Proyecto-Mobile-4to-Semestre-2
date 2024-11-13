@@ -1,141 +1,4 @@
-// import { Component, OnInit } from '@angular/core';
-// import { FormControl } from '@angular/forms';
-// import { Router } from '@angular/router';
-
-// // Import para el mapa
-// import * as mapboxgl from 'mapbox-gl';
-// import { environment } from 'src/environments/environment.prod';
-
-// // Import para geolocalización
-// import { Geolocation } from '@capacitor/geolocation';
-// import { HttpClient } from '@angular/common/http';
-
-// // Import para autocompletado
-// import { debounceTime, switchMap } from 'rxjs/operators';
-
-// @Component({
-//   selector: 'app-chofer',
-//   templateUrl: './chofer.page.html',
-//   styleUrls: ['./chofer.page.scss'],
-// })
-// export class ChoferPage implements OnInit {
-//   username = '';
-//   myControl = new FormControl('');
-//   options: string[] = ['Duoc UC Antonio Varas', 'Estación de Metro Manuel Montt'];
-//   direccion: string = 'Esperando dirección inicial';
-//   direccionDestino: string = '';
-
-//   // Sección de autocompletado
-//   direccionControl = new FormControl();
-//   direcciones: any[] = [];
-  
-//   // Variables del mapa
-//   public map!: mapboxgl.Map;
-//   public style = 'mapbox://styles/mapbox/streets-v11';
-
-//   constructor(private router: Router, private http: HttpClient) {
-//     const navegacion = this.router.getCurrentNavigation();
-//     const state = navegacion?.extras.state as {
-//       username: '';
-//       password: '';
-//     };
-//     this.username = state.username;
-
-//     // MAPA
-//     (mapboxgl as any).accessToken = environment.MAPBOX_KEY;
-//   }
-
-//   ngOnInit() {
-//     this.direccionControl.valueChanges.pipe(
-//       debounceTime(300), // Espera 300 ms después de que el usuario deja de escribir
-//       switchMap(value => this.buscarDireccion(value))
-//     ).subscribe((resultados: any) => {
-//       this.direcciones = resultados.features;
-//     });
-//   }
-
-//   ionViewWillEnter(){
-//     if(!this.map){
-//       this.crearMapa();
-//     }
-//   }
-
-//   limpiar(){
-    
-//   }
-
-//   async crearMapa() {
-//     try {
-//       const position = await Geolocation.getCurrentPosition();
-//       const latitud = position.coords.latitude;
-//       const longitud = position.coords.longitude;
-
-//       console.log('Latitud partida:', latitud);
-//       console.log('Longitud partida:', longitud);
-
-//       this.map = new mapboxgl.Map({
-//         container: 'mapa-box',
-//         style: this.style,
-//         zoom: 14,
-//         center: [longitud, latitud], // Coordenadas de ubicación actual
-//       });
-
-//       // Llamar a la función para obtener la dirección
-//       this.obtenerDireccion(longitud, latitud);
-
-//     } catch (error) {
-//       console.error('Error obteniendo la ubicación:', error);
-//     }
-//   }
-
-//   obtenerDireccion(longitud: number, latitud: number) {
-//     const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitud},${latitud}.json?access_token=${environment.MAPBOX_KEY}`;
-
-//     this.http.get(url).subscribe(
-//       (response: any) => {
-//         if (response.features && response.features.length > 0) {
-//           const direccion = response.features[0].place_name;
-//           console.log('Dirección obtenida:', direccion);
-//           this.actualizarTextoAutomatico(direccion); // Asegúrate de pasar 'direccion' aquí
-//         } else {
-//           console.warn('No se encontraron resultados para esas coordenadas');
-//           this.actualizarTextoAutomatico('');
-//         }
-//       },
-//       (error) => {
-//         console.error('Error al obtener la dirección:', error);
-//         this.actualizarTextoAutomatico('');
-//       }
-//     );
-//   }
-
-//   actualizarTextoAutomatico(direccion: string) {
-//     this.direccion = direccion; // Asigna directamente la dirección
-//   }
-
-//   buscarDireccion(query: string) {
-//     const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${environment.MAPBOX_KEY}&autocomplete=true&country=CL`;
-//     return this.http.get(url);
-//   }
-  
-//   seleccionarDireccion(direccion: string) {
-//     this.buscarDireccion(direccion).subscribe((response: any) => {
-//       if (response.features && response.features.length > 0) {
-//         const coordinates = response.features[0].geometry.coordinates;
-//         const longitude = coordinates[0];
-//         const latitude = coordinates[1];
-  
-//         console.log('Dirección seleccionada:', direccion);
-//         console.log('Longitud destino:', longitude);
-//         console.log('Latitud destino:', latitude);
-//       } else {
-//         console.error('No se encontraron coordenadas para la dirección seleccionada.');
-//       }
-//     });
-//   }
-// }
-
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -155,7 +18,7 @@ import { debounceTime, switchMap } from 'rxjs/operators';
   templateUrl: './chofer.page.html',
   styleUrls: ['./chofer.page.scss'],
 })
-export class ChoferPage implements OnInit {
+export class ChoferPage implements OnInit, OnChanges {
   username = '';
   myControl = new FormControl('');
   options: string[] = ['Duoc UC Antonio Varas', 'Estación de Metro Manuel Montt'];
@@ -278,6 +141,7 @@ export class ChoferPage implements OnInit {
         const latitude = coordinates[1];
         this.latitudInicio = latitude;
         this.longitudInicio = longitude;
+        this.verificarCoordenadas();
   
         console.log('Dirección seleccionada:', direccion);
         console.log('Longitud partida:', longitude);
@@ -299,6 +163,7 @@ export class ChoferPage implements OnInit {
         const latitude = coordinates[1];
         this.latitudDestino = latitude;
         this.longitudDestino = longitude;
+        this.verificarCoordenadas();
   
         console.log('Dirección seleccionada:', direccion);
         console.log('Longitud destino:', longitude);
@@ -313,40 +178,65 @@ export class ChoferPage implements OnInit {
     });
   }
 
-  // obtenerRuta(longitudDestino: number, latitudDestino: number) {
-  //   // Suponemos que tienes las coordenadas de partida
-  //   const longitudPartida = this.map.getCenter().lng;
-  //   const latitudPartida = this.map.getCenter().lat;
+  obtenerRuta(longitudPartida: number, latitudPartida: number, longitudDestino: number, latitudDestino: number) {
 
-  //   const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${longitudPartida},${latitudPartida};${longitudDestino},${latitudDestino}?geometries=geojson&access_token=${environment.MAPBOX_KEY}`;
+    const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${longitudPartida},${latitudPartida};${longitudDestino},${latitudDestino}?geometries=geojson&access_token=${environment.MAPBOX_KEY}`;
+    console.log(url);
 
-  //   this.http.get(url).subscribe((response: any) => {
-  //     const ruta = response.routes[0].geometry; // Ruta obtenida
-  //     console.log('Ruta obtenida:', ruta);
+    this.http.get(url).subscribe((response: any) => {
+      const ruta = response.routes[0].geometry; // Ruta obtenida
+      console.log('Ruta obtenida:', ruta);
 
-  //     // Añadir la ruta al mapa
-  //     this.map.addSource('route', {
-  //       type: 'geojson',
-  //       data: {
-  //         type: 'Feature',
-  //         properties: {},
-  //         geometry: ruta // Aquí va la geometría de la ruta obtenida
-  //       }
-  //     });
+      // Añadir la ruta al mapa
+      this.map.addSource('route', {
+        type: 'geojson',
+        data: {
+          type: 'Feature',
+          properties: {},
+          geometry: ruta // Aquí va la geometría de la ruta obtenida
+        }
+      });
 
-  //     this.map.addLayer({
-  //       id: 'route',
-  //       type: 'line',
-  //       source: 'route',
-  //       layout: {
-  //         'line-join': 'round',
-  //         'line-cap': 'round'
-  //       },
-  //       paint: {
-  //         'line-color': '#3887be',
-  //         'line-width': 5
-  //       }
-  //     });
-  //   });
-  // }
+      this.map.addLayer({
+        id: 'route',
+        type: 'line',
+        source: 'route',
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'round'
+        },
+        paint: {
+          'line-color': '#3887be',
+          'line-width': 5
+        }
+      });
+    });
+  }
+
+  borrarRuta() {
+    // Verifica si la capa 'route' existe en el mapa antes de eliminarla
+    if (this.map.getLayer('route')) {
+      this.map.removeLayer('route'); // Elimina la capa de la ruta
+    }
+  
+    // Verifica si la fuente 'route' existe en el mapa antes de eliminarla
+    if (this.map.getSource('route')) {
+      this.map.removeSource('route'); // Elimina la fuente de la ruta
+    }
+  }
+
+  verificarCoordenadas() {
+    if (this.latitudInicio !== 0 && this.longitudInicio !== 0 && this.latitudDestino !== 0 && this.longitudDestino !== 0) {
+      // Si las coordenadas son válidas, llamamos a la función obtenerRuta
+      this.borrarRuta();
+      this.obtenerRuta(this.longitudInicio, this.latitudInicio, this.longitudDestino, this.latitudDestino);
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['latitudInicio'] || changes['longitudInicio'] || changes['latitudDestino'] || changes['longitudDestino']) {
+      // Si alguna de las coordenadas cambia, verificamos y ejecutamos la función
+      this.verificarCoordenadas();
+    }
+  }
 }
