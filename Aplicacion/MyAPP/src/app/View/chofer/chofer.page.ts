@@ -70,14 +70,14 @@ export class ChoferPage implements OnInit {
       const latitud = position.coords.latitude;
       const longitud = position.coords.longitude;
 
-      console.log('Latitud:', latitud);
-      console.log('Longitud:', longitud);
+      console.log('Latitud partida:', latitud);
+      console.log('Longitud partida:', longitud);
 
       this.map = new mapboxgl.Map({
         container: 'mapa-box',
         style: this.style,
         zoom: 14,
-        center: [longitud, latitud],
+        center: [longitud, latitud], // Coordenadas de ubicación actual
       });
 
       // Llamar a la función para obtener la dirección
@@ -114,11 +114,23 @@ export class ChoferPage implements OnInit {
   }
 
   buscarDireccion(query: string) {
-    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${environment.MAPBOX_KEY}&autocomplete=true&country=CL`; // Cambia el código de país según necesidad
+    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${environment.MAPBOX_KEY}&autocomplete=true&country=CL`;
     return this.http.get(url);
   }
-
+  
   seleccionarDireccion(direccion: string) {
-    console.log('Dirección seleccionada:', direccion);
+    this.buscarDireccion(direccion).subscribe((response: any) => {
+      if (response.features && response.features.length > 0) {
+        const coordinates = response.features[0].geometry.coordinates;
+        const longitude = coordinates[0];
+        const latitude = coordinates[1];
+  
+        console.log('Dirección seleccionada:', direccion);
+        console.log('Longitud destino:', longitude);
+        console.log('Latitud destino:', latitude);
+      } else {
+        console.error('No se encontraron coordenadas para la dirección seleccionada.');
+      }
+    });
   }
 }
