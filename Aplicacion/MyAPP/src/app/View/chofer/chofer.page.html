@@ -26,46 +26,33 @@
       <ion-card-content>
         <ion-list style="border-radius: 12px;">
           <ion-item>
-            <!-- <ion-input label="Partida" labelPlacement="floating"
-              placeholder="Ingrese el lugar de partida" [(ngModel)]="direccion"></ion-input> -->
-              <form class="example-form" style="width: 100%;">
-                <mat-form-field appearance="fill" class="example-full-width" style="width: 100%;">
-                  <mat-label>Dirección de partida</mat-label>
-                  <input type="text"
-                        matInput
-                        [formControl]="direccionControl"
-                        [matAutocomplete]="auto"
-                        [(ngModel)]="direccion">
-                  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="seleccionarDireccion($event.option.value)">
-                    <mat-option *ngFor="let opcion of direcciones" [value]="opcion.place_name">
-                      {{ opcion.place_name }}
-                    </mat-option>
-                  </mat-autocomplete>
-                </mat-form-field>
-              </form>
-          </ion-item>
-          <ion-item>
-            <!-- <form class="example-form" style="width: 100%;">
-              <mat-form-field class="example-full-width" style="width: 100%;">
-                <mat-label>Destino</mat-label>
-                <input type="text" placeholder="Elige una opción" aria-label="Destino" matInput [formControl]="myControl"
-                  [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option *ngFor="let option of options" [value]="option">
-                    {{ option }}
+            <form class="example-form" style="width: 100%;">
+              <mat-form-field appearance="fill" class="example-full-width" style="width: 100%;">
+                <mat-label>Dirección de partida</mat-label>
+                <input type="text"
+                      matInput
+                      [formControl]="direccionControlPartida"
+                      [matAutocomplete]="autoPartida"
+                      [(ngModel)]="direccion">
+                <mat-autocomplete #autoPartida="matAutocomplete" (optionSelected)="seleccionarDireccionPartida($event.option.value)">
+                  <mat-option *ngFor="let opcion of direcciones" [value]="opcion.place_name">
+                    {{ opcion.place_name }}
                   </mat-option>
                 </mat-autocomplete>
               </mat-form-field>
-            </form> -->
+            </form>
+          </ion-item>
+          
+          <ion-item>
             <form class="example-form" style="width: 100%;">
               <mat-form-field appearance="fill" class="example-full-width" style="width: 100%;">
                 <mat-label>Dirección de destino</mat-label>
                 <input type="text"
                       matInput
-                      [formControl]="direccionControl"
-                      [matAutocomplete]="auto"
+                      [formControl]="direccionControlDestino"
+                      [matAutocomplete]="autoDestino"
                       [(ngModel)]="direccionDestino">
-                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="seleccionarDireccion($event.option.value)">
+                <mat-autocomplete #autoDestino="matAutocomplete" (optionSelected)="seleccionarDireccionDestino($event.option.value)">
                   <mat-option *ngFor="let opcion of direcciones" [value]="opcion.place_name">
                     {{ opcion.place_name }}
                   </mat-option>
