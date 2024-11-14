@@ -23,7 +23,6 @@ export class ChoferPage implements OnInit, OnChanges {
   myControl = new FormControl('');
   options: string[] = ['Duoc UC Antonio Varas', 'Estación de Metro Manuel Montt'];
   direccion: string = 'Esperando dirección inicial';
-  direccionDestino: string = '';
 
   // Sección de autocompletado
   direccionControlPartida = new FormControl();
@@ -35,8 +34,10 @@ export class ChoferPage implements OnInit, OnChanges {
   public style = 'mapbox://styles/mapbox/streets-v11';
 
   // Variables para la ruta
+  direccionPartida: string = '';
   longitudInicio: number = 0;
   latitudInicio: number = 0;
+  direccionDestino: string = '';
   longitudDestino: number = 0;
   latitudDestino: number = 0;
 
@@ -112,6 +113,7 @@ export class ChoferPage implements OnInit, OnChanges {
           const direccion = response.features[0].place_name;
           console.log('Dirección obtenida:', direccion);
           this.actualizarTextoAutomatico(direccion); // Asegúrate de pasar 'direccion' aquí
+          this.direccionPartida = direccion;
         } else {
           console.warn('No se encontraron resultados para esas coordenadas');
           this.actualizarTextoAutomatico('');
@@ -146,6 +148,7 @@ export class ChoferPage implements OnInit, OnChanges {
         console.log('Dirección seleccionada:', direccion);
         console.log('Longitud partida:', longitude);
         console.log('Latitud partida:', latitude);
+        this.direccionPartida = direccion;
 
         // Ahora obtenemos la ruta
         // this.obtenerRuta(longitude, latitude);
@@ -168,7 +171,7 @@ export class ChoferPage implements OnInit, OnChanges {
         console.log('Dirección seleccionada:', direccion);
         console.log('Longitud destino:', longitude);
         console.log('Latitud destino:', latitude);
-        console.log('Ejecutado');
+        this.direccionDestino = direccion;
 
         // Ahora obtenemos la ruta
         // this.obtenerRuta(longitude, latitude);

@@ -50,5 +50,20 @@
             "password": "pass123", 
             "tipo_usuario": 2
         }
+    },
+    {
+        "model": "rest_usuario.viaje",
+        "pk": 1,
+        "fields": {
+            "direccionPartida": "Autopista Los Libertadores, Colina, Santiago Metropolitan Region 9340000, Chile",
+            "latitudPartida": -33.1985566,
+            "longitudPartida": -70.6573578,
+            "direccionDestino": "Antonio Varas 666, Providencia, Santiago Metropolitan Region 7500000, Chile",
+            "latitudDestino": -33.433046,
+            "longitudDestino": -70.614902,
+            "precio": 3000,
+            "horaSalida": "17:30",
+            "asientos": 3
+        }
     }
 ]
