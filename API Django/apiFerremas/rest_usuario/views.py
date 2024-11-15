@@ -87,3 +87,28 @@ def listar_viajes(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def detalle_viaje(request, username):
+    # Obtiene, actualiza o elimina un viaje específico por su 'id'
+    try:
+        viaje = Viaje.objects.get(username=username)
+    except Viaje.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'GET':
+        serializer = ViajeSerializer(viaje)
+        return Response(serializer.data)
+    
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request)
+        serializer = ViajeSerializer(viaje, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'DELETE':
+        viaje.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

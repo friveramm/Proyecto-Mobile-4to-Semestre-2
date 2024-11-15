@@ -34,4 +34,16 @@ export class ApiControllerServiceService {
     getTypeUsers(): Observable<any> {
       return this.http.get(this.apiUrl + "/listar_tipo_usuarios")
     }
+
+    getTrips(): Observable<any> {
+      return this.http.get(this.apiUrl + "/listar_viajes")
+    }
+
+    getTrip(username: string): Observable<any> {
+      return this.http.get(this.apiUrl + "/detalle_viaje/" + username)
+    }
+    
+    postTrip(data: any): Observable<any> {
+      return this.http.post(this.apiUrl + "/listar_viajes", data)
+    }
 }
