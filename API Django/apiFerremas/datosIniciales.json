@@ -65,5 +65,20 @@
             "horaSalida": "17:30",
             "asientos": 3
         }
+    },
+    {
+        "model": "rest_usuario.viaje",
+        "pk": 2,
+        "fields": {
+            "direccionPartida": "Antonio Varas 666, Providencia, Santiago Metropolitan Region 7500000, Chile",
+            "latitudPartida": -33.433046,
+            "longitudPartida": -70.614902,
+            "direccionDestino": "Metro Manuel Montt, Providencia",
+            "latitudDestino": -33.42834,
+            "longitudDestino": -70.6217849,
+            "precio": 2000,
+            "horaSalida": "14:30",
+            "asientos": 2
+        }
     }
 ]
