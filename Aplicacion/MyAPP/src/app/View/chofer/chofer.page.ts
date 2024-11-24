@@ -1,6 +1,7 @@
 import { Component, OnInit, SimpleChanges, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 // Import para el mapa
 import * as mapboxgl from 'mapbox-gl';
@@ -12,6 +13,7 @@ import { HttpClient } from '@angular/common/http';
 
 // Import para autocompletado
 import { debounceTime, switchMap } from 'rxjs/operators';
+import { ApiControllerServiceService } from 'src/app/Servicios/api-controller-service.service';
 
 @Component({
   selector: 'app-chofer',
@@ -41,7 +43,10 @@ export class ChoferPage implements OnInit, OnChanges {
   longitudDestino: number = 0;
   latitudDestino: number = 0;
 
-  constructor(private router: Router, private http: HttpClient) {
+  // Necesario para guardar viaje
+
+
+  constructor(private router: Router, private http: HttpClient, private alertController: AlertController, private api: ApiControllerServiceService) {
     const navegacion = this.router.getCurrentNavigation();
     const state = navegacion?.extras.state as {
       username: '';
@@ -242,4 +247,41 @@ export class ChoferPage implements OnInit, OnChanges {
       this.verificarCoordenadas();
     }
   }
+
+  guardarViaje() {
+    const nuevoViaje = {
+      direccionPartida: this.direccionPartida,
+      latitudPartida: this.latitudInicio,
+      longitudPartida: this.longitudInicio,
+      direccionDestino: this.direccionDestino,
+      latitudDestino: this.latitudDestino,
+      longitudDestino: this.longitudDestino,
+      precio: Number((document.querySelector('ion-input[placeholder="Ingrese el precio por persona"]') as HTMLIonInputElement).value),
+      horaSalida: (document.querySelector('ion-input[placeholder="Ingrese la hora de salida"]') as HTMLIonInputElement).value,
+      asientos: Number((document.querySelector('ion-input[placeholder="Ingrese el número de asientos por persona"]') as HTMLIonInputElement).value)
+    };
+  
+    console.log(nuevoViaje);
+    
+    this.api.postTrip(nuevoViaje).subscribe(
+      (response) => {
+        console.log('Viaje guardado con éxito:', response);
+  
+        // Mostrar alerta de éxito
+        this.alertController.create({
+          header: 'Éxito',
+          message: 'Viaje guardado con éxito',
+          buttons: [{
+            text: 'OK',
+            handler: () => {
+              this.limpiar(); // Limpia los campos si es necesario
+            }
+          }]
+        }).then(alert => alert.present());
+      },
+      (error) => {
+        console.error('Error al guardar el viaje:', error);
+      }
+    );
+  }  
 }
