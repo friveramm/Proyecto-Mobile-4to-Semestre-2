@@ -31,13 +31,27 @@ export class EditarUsuarioPage implements OnInit {
 
   typeUsers: any[] = [];
 
+  // constructor(private router: Router, private api: ApiControllerServiceService) {
+  //   const navegacion = this.router.getCurrentNavigation();
+  //   const state = navegacion?.extras.state as {
+  //     username: '';
+  //     password: '';
+  //   };
+  //   this.username = state.username;
+  // }
+
   constructor(private router: Router, private api: ApiControllerServiceService) {
     const navegacion = this.router.getCurrentNavigation();
-    const state = navegacion?.extras.state as {
-      username: '';
-      password: '';
-    };
-    this.username = state.username;
+    const state = navegacion?.extras.state as { username: string; password: string };
+    
+    if (state) {
+      this.username = state.username;
+    } else {
+      // Manejo en caso de que state no esté disponible
+      console.warn('No se recibió el estado de navegación.');
+      // Asignar un valor predeterminado o redirigir al usuario
+      this.username = '';
+    }
   }
 
   ngOnInit() {

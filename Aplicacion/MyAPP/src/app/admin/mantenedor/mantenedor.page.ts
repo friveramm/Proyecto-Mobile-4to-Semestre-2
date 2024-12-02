@@ -1,24 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ApiControllerServiceService } from 'src/app/Servicios/api-controller-service.service';
 import { NavigationExtras, Router, ActivatedRoute } from '@angular/router';
 
-
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mantenedor',
   templateUrl: './mantenedor.page.html',
   styleUrls: ['./mantenedor.page.scss'],
 })
-export class MantenedorPage implements OnInit {
+export class MantenedorPage implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
 
   users: any[] = [];
+
   constructor(private router: Router, private api: ApiControllerServiceService, private actrouter: ActivatedRoute) {
-    this.actrouter.paramMap.subscribe(params => {
+    this.actrouter.paramMap.pipe(takeUntil(this.destroy$)).subscribe(params => {
       const refresh = params.get('refresh');
       if (refresh) {
         this.cargarUsuarios();  // Llamada al método para refrescar la lista
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   user = {
