@@ -12,22 +12,24 @@
     width: 90%;
     height: 100%;
     border-radius: 12px;
+    
 }
 
 .map {
     width: 100%;
     height: 100%;
+    object-fit: contain;
 }
 
 // Ajuste para que todo el documento use el 100% de la ventana
 html, body, ion-content {
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 70%;
     overflow: hidden;
 }
 
 #container{
-    padding-top: 550px;
+    padding-top: 400px;
 }
 
 #cont-botones{
