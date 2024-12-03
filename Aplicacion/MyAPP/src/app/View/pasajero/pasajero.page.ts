@@ -49,18 +49,39 @@ export class PasajeroPage implements OnInit {
     (mapboxgl as any).accessToken = environment.MAPBOX_KEY;
   }
 
-  async crearMapa(longitudInicial: number, latitudInicial: number) {
-    try {
-      this.map = new mapboxgl.Map({
-        container: 'mapa-box',
-        style: this.style,
-        zoom: 14,
-        center: [longitudInicial, latitudInicial], // Coordenadas de ubicación actual
-      });
+  // async crearMapa(longitudInicial: number, latitudInicial: number) {
+  //   try {
+  //     this.map = new mapboxgl.Map({
+  //       container: 'mapa-box',
+  //       style: this.style,
+  //       zoom: 14,
+  //       center: [longitudInicial, latitudInicial], // Coordenadas de ubicación actual
+  //     });
   
-    } catch (error) {
-      console.error('Error obteniendo la ubicación:', error);
-    }
+  //   } catch (error) {
+  //     console.error('Error obteniendo la ubicación:', error);
+  //   }
+  // }
+
+  async crearMapa(longitudInicial: number, latitudInicial: number): Promise<void> {
+    return new Promise((resolve, reject) => {
+      try {
+        this.map = new mapboxgl.Map({
+          container: 'mapa-box',
+          style: this.style,
+          zoom: 14,
+          center: [longitudInicial, latitudInicial], // Coordenadas de ubicación actual
+        });
+  
+        // El mapa se ha cargado correctamente
+        this.map.on('load', () => {
+          resolve(); // Resuelve la promesa cuando el mapa se ha cargado
+        });
+  
+      } catch (error) {
+        reject('Error al crear el mapa: ' + error);
+      }
+    });
   }
 
   //Cargar viajes
@@ -119,6 +140,7 @@ export class PasajeroPage implements OnInit {
 
   ngOnInit() {
     this.cargarViajes();
+    this.borrarRuta();
   }
 
   seleccionViaje(event: any) {
@@ -144,10 +166,12 @@ export class PasajeroPage implements OnInit {
         this.obtenerRuta(longitudPartida, latitudPartida, longitudDestino, latitudDestino);
       } else {
         // Si no hay mapa, lo creamos
-        setTimeout(() => {
-          this.crearMapa(longitudPartida, latitudPartida);
+        this.crearMapa(longitudPartida, latitudPartida).then(() => {
+          // Una vez el mapa esté creado, obtenemos la ruta
           this.obtenerRuta(longitudPartida, latitudPartida, longitudDestino, latitudDestino);
-        }, 300); // Se puede ajustar el tiempo de espera
+        }).catch((error) => {
+          console.error('Error al crear el mapa:', error);
+        });
       }
     } else {
       console.log('Las coordenadas no son números válidos');
